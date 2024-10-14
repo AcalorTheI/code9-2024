@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+#  app:
+#    image: your-app-name
+#    restart: always
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+          - "3307:3306"
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - /path/to/local/dаta:/root/redis
+      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PORT=6379
+  redisinsights:
+    image: redislabs/redisinsight:latest
+    restart: always
+    ports:
+      - '8001:8001'
+      - '5540:5540'
+    volumes:
+      - ./data/redisinsight:/db
+
+#    environment:
+#      SPRING_PROFILES_ACTIVE: "prod"  # Optional, set Spring Boot profile
+#  cache:
+#    image: redis:6.2-alpine
+#    restart: always
+#    ports:
+#      - '6379:6379'
+#    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+#    volumes:
+#      - cache:/data
+#  db:
+#    image: mysql
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: example
+#  activemq:
+#    image: webcenter/activemq:latest
+#    ports:
+#      - "8161:8161"
+#      - "61616:61616"
+#    environment:
+#      - ACTIVEMQ_NAME=activemq
+#      - ACTIVEMQ_USERNAME=admin
+#      - ACTIVEMQ_PASSWORD=password
+#volumes:
+#  cache:
+#    driver: local
