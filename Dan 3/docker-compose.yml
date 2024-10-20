@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+#  app:
+#    image: <redirekcija-id> ili ime
+#    restart: always
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#      - redis
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+          - "3307:3306"
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+#    volumes:
+#      - /path/to/local/dаta:/root/redis
+#      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PORT=6379
+#  redisinsights:
+#    image: redislabs/redisinsight:latest
+#    restart: always
+#    ports:
+#      - '8001:8001'
+#      - '5540:5540'
+#    volumes:
+#      - ./data/redisinsight:/db
+  activemq:
+    image: webcenter/activemq:latest
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+    environment:
+      - ACTIVEMQ_NAME=activemq
+      - ACTIVEMQ_USERNAME=admin
+      - ACTIVEMQ_PASSWORD=password
